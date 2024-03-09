@@ -7,17 +7,23 @@ import { Button } from "../ui/button";
 
 export default function LoginForm() {
   return (
-    <Form className="p-10 flex flex-col gap-4">
+    <Form className="p-10 flex flex-col gap-4 min-h-full justify-center min-w-96">
       <h1>Login</h1>
       <TextField name="email" type="email" isRequired>
         <Label>E-mail</Label>
         <Input placeholder="E-mail" />
-        <FieldError />
+        <FieldError>
+          {({ validationDetails }) =>
+            validationDetails.valueMissing
+              ? "Please enter your e-mail."
+              : "Invalid e-mail."
+          }
+        </FieldError>
       </TextField>
       <TextField name="password" type="password" isRequired>
         <Label>Password</Label>
         <Input placeholder="Password" />
-        <FieldError />
+        <FieldError>Please enter your password.</FieldError>
       </TextField>
       <Button type="submit">Sign in</Button>
     </Form>

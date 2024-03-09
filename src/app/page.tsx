@@ -1,4 +1,5 @@
 import LoginForm from "@/components/loginPage/LoginForm";
+import RegisterForm from "@/components/loginPage/RegisterForm";
 import { Separator } from "@/components/ui/separator";
 
 export default function LoginPage() {
@@ -7,7 +8,7 @@ export default function LoginPage() {
       <div className="flex flex-row">
         <LoginForm />
         <Separator orientation="vertical" />
-        <div className="p-4">Register</div>
+        <RegisterForm />
       </div>
     </div>
   );
