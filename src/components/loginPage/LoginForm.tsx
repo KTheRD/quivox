@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 export default function LoginForm() {
   return (
-    <Form className="p-10 flex flex-col gap-4 min-h-full justify-center min-w-96">
+    <Form className="p-10 flex flex-col gap-4 justify-center min-w-96">
       <h1>Login</h1>
       <TextField name="email" type="email" isRequired>
         <Label>E-mail</Label>

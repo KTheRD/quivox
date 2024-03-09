@@ -57,7 +57,7 @@ export default function RegisterForm() {
             "Create a password"
           ) : (
             <>
-              Password must:
+              <span>Password must:</span>
               <ul className="list-disc">
                 {errors.map((error, i) => (
                   <li key={i}>{error}</li>
@@ -83,7 +83,7 @@ export default function RegisterForm() {
             : "Please, repeat your password."}
         </FieldError>
       </TextField>
-      <Button type="submit">Sign in</Button>
+      <Button type="submit">Sign up</Button>
     </Form>
   );
 }
