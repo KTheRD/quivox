@@ -16,7 +16,8 @@ export default function ThemeMenu() {
     <MenuTrigger>
       <Button
         variant={"outline"}
-        className={"m-2 rounded-full p-0 aspect-square"}
+        className={"rounded-full p-0 aspect-square"}
+        aria-label="theme menu"
       >
         <CurrentThemeSymbol />
       </Button>

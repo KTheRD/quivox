@@ -21,12 +21,13 @@ export const { auth, signIn, signOut } = NextAuth({
         const passwordHashAndID = await fetchIDAndPasswordHash(email);
         if (!passwordHashAndID) return null;
 
-        if (!(await compare(password, passwordHashAndID.passwordHash)))
+        if (!(await compare(password, passwordHashAndID.passwordHash))) {
           return null;
-          
-        return {
-          id: passwordHashAndID.id.toString()
         }
+
+        return {
+          id: passwordHashAndID.id.toString(),
+        };
       },
     }),
   ],

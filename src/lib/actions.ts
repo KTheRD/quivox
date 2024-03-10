@@ -5,7 +5,10 @@ import { hash } from "bcrypt";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export async function authenticate(_: string | undefined, formData: FormData) {
+export async function authenticate(
+  _: string | undefined,
+  formData: FormData | { email: string; password: string },
+) {
   try {
     await signIn("credentials", formData);
   } catch (error) {
@@ -17,6 +20,7 @@ export async function authenticate(_: string | undefined, formData: FormData) {
           return "Something went wrong";
       }
     }
+    throw error
   }
 }
 
@@ -56,5 +60,5 @@ export async function register(_: string | undefined, formData: FormData) {
 
   if (result) return "Something went wrong";
 
-  await signIn("credentials", { email, password });
+  await authenticate(undefined, { email, password });
 }

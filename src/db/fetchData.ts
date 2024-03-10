@@ -76,3 +76,19 @@ export async function createUser({
     return "Something went wrong";
   }
 }
+
+export async function fetchUserData(id: number) {
+  unstable_noStore();
+
+  try {
+    const result = await db
+      .select({ name: user.name, email: user.email, imageURL: user.imageURL })
+      .from(user)
+      .where(eq(user.id, id));
+    if (result.length) return result[0];
+    return null;
+  } catch (e) {
+    console.log("Failed to fetch user data:", e);
+    return "Something went wrong";
+  }
+}

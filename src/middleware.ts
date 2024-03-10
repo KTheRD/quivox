@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
-import { locales } from "./navigation";
 import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
+import { locales } from "./i18n";
 
 const intlMiddleware = createIntlMiddleware({
   locales,
