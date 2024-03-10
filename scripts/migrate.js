@@ -7,6 +7,8 @@ config();
 
 const db = drizzle(sql);
 
-await migrate(db, { migrationsFolder: "drizzle" });
+(async () => {
+  await migrate(db, { migrationsFolder: "drizzle" });
 
-await sql.end();
+  await sql.end();
+})();

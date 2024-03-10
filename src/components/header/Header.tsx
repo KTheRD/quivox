@@ -1,6 +1,4 @@
-import dynamic from "next/dynamic";
-
-const ThemeMenu = dynamic(() => import("./ThemeMenu"), {ssr: false});
+import ThemeMenu from "./ThemeMenu";
 
 export default function Header() {
   return (

@@ -3,9 +3,14 @@ import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
 import { Menu, MenuItem, MenuPopover, MenuTrigger } from "../ui/menu";
 import { Moon, Sun, SunMoon } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const CurrentThemeSymbol = dynamic(() => import("./CurrentThemeSymbol"), {
+  ssr: false,
+});
 
 export default function ThemeMenu() {
-  const { setTheme, theme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <MenuTrigger>
@@ -13,13 +18,7 @@ export default function ThemeMenu() {
         variant={"outline"}
         className={"m-2 rounded-full p-0 aspect-square"}
       >
-        {theme === "light" ? (
-          <Sun />
-        ) : theme === "dark" ? (
-          <Moon />
-        ) : (
-          <SunMoon />
-        )}
+        <CurrentThemeSymbol />
       </Button>
       <MenuPopover placement="bottom">
         <Menu onAction={(id) => setTheme(id as string)}>
