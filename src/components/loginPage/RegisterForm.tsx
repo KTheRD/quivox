@@ -5,28 +5,37 @@ import { Label } from "../ui/label";
 import { FieldError } from "../ui/fieldError";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { useFormState } from "react-dom";
+import { register } from "@/lib/actions";
 
 export default function RegisterForm() {
+  const [error, dispatch] = useFormState(register, undefined);
+
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const errors = [];
+  const passwordErrors = [];
 
   if (password.length > 0) {
     if (password.length < 8) {
-      errors.push("be at least 8 characters long.");
+      passwordErrors.push("be at least 8 characters long.");
     }
     if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
-      errors.push("contain both uppercase and lowercase latin letters.");
+      passwordErrors.push(
+        "contain both uppercase and lowercase latin letters.",
+      );
     }
     if (!/\d/.test(password)) {
-      errors.push("contain at least one digit.");
+      passwordErrors.push("contain at least one digit.");
     }
   }
 
   return (
-    <Form className="p-10 flex flex-col gap-4 min-h-full justify-center min-w-96">
+    <Form
+      action={dispatch}
+      className="p-10 flex flex-col gap-4 min-h-full justify-center min-w-96"
+    >
       <h1>Register</h1>
-      <TextField name="username" type="text" isRequired>
+      <TextField name="name" type="text" isRequired>
         <Label>Username</Label>
         <Input placeholder="Username" />
         <FieldError>Username is required.</FieldError>
@@ -48,7 +57,7 @@ export default function RegisterForm() {
         isRequired
         value={password}
         onChange={setPassword}
-        isInvalid={errors.length > 0}
+        isInvalid={passwordErrors.length > 0}
       >
         <Label>Password</Label>
         <Input placeholder="Password" />
@@ -59,7 +68,7 @@ export default function RegisterForm() {
             <>
               <span>Password must:</span>
               <ul className="list-disc">
-                {errors.map((error, i) => (
+                {passwordErrors.map((error, i) => (
                   <li key={i}>{error}</li>
                 ))}
               </ul>
@@ -84,6 +93,7 @@ export default function RegisterForm() {
         </FieldError>
       </TextField>
       <Button type="submit">Sign up</Button>
+      {error && <div className="text-invalid">{error}</div>}
     </Form>
   );
 }
