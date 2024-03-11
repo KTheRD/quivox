@@ -7,11 +7,13 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { register } from "@/lib/actions";
+import { z } from "zod";
 
 export default function RegisterForm() {
   const [error, dispatch] = useFormState(register, undefined);
 
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const passwordErrors = [];
 
@@ -35,12 +37,17 @@ export default function RegisterForm() {
       className="p-10 flex flex-col gap-4 min-h-full justify-center min-w-96"
     >
       <h1>Register</h1>
-      <TextField name="name" type="text" isRequired>
-        <Label>Username</Label>
-        <Input placeholder="Username" />
-        <FieldError>Username is required.</FieldError>
-      </TextField>
-      <TextField name="email" type="email" isRequired>
+      <TextField
+        name="email"
+        type="email"
+        isRequired
+        value={email}
+        onChange={setEmail}
+        isInvalid={
+          email.length !== 0 &&
+          z.string().email().safeParse(email).success === false
+        } //using zod instead of browser validation to keep it consistent with backend validation
+      >
         <Label>E-mail</Label>
         <Input placeholder="E-mail" />
         <FieldError>
@@ -50,6 +57,11 @@ export default function RegisterForm() {
               : "Invalid e-mail."
           }
         </FieldError>
+      </TextField>
+      <TextField name="name" type="text" isRequired>
+        <Label>Username</Label>
+        <Input placeholder="Username" />
+        <FieldError>Username is required.</FieldError>
       </TextField>
       <TextField
         name="password"
@@ -77,7 +89,7 @@ export default function RegisterForm() {
         </FieldError>
       </TextField>
       <TextField
-        name="repeat-password"
+        name="repeatPassword"
         type="password"
         isRequired
         value={repeatPassword}

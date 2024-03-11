@@ -1,5 +1,5 @@
 "use server";
-import { signIn } from "@/auth";
+import { signIn, signOut as _signOut } from "@/auth";
 import { createUser, doesEmailExist, doesNameExist } from "@/db/fetchData";
 import { hash } from "bcrypt";
 import { AuthError } from "next-auth";
@@ -20,7 +20,7 @@ export async function authenticate(
           return "Something went wrong";
       }
     }
-    throw error
+    throw error;
   }
 }
 
@@ -39,8 +39,7 @@ export async function register(_: string | undefined, formData: FormData) {
         /[A-Z]/.test(data.password) &&
         /\d/.test(data.password),
     )
-    .safeParse(formData);
-
+    .safeParse(Object.fromEntries(formData));
   if (!parsedData.success) return "Bad data";
   const { email, name, password } = parsedData.data;
 
@@ -61,4 +60,8 @@ export async function register(_: string | undefined, formData: FormData) {
   if (result) return "Something went wrong";
 
   await authenticate(undefined, { email, password });
+}
+
+export async function signOut(){
+  await _signOut()
 }

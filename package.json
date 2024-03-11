@@ -11,6 +11,7 @@
     "migrate": "node ./scripts/migrate.js"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.0.4",
     "@vercel/postgres": "^0.7.2",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",

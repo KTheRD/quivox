@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { authConfig } from "@/auth.config";
 import credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import { fetchIDAndPasswordHash } from "./db/fetchData";
+import { fetchUserData } from "./db/fetchData";
 import { compare } from "bcrypt";
 
 export const { auth, signIn, signOut } = NextAuth({
@@ -18,15 +18,18 @@ export const { auth, signIn, signOut } = NextAuth({
 
         const { email, password } = parsedCredentials.data;
 
-        const passwordHashAndID = await fetchIDAndPasswordHash(email);
-        if (!passwordHashAndID) return null;
+        const userData = await fetchUserData(email);
+        if (!userData) return null;
 
-        if (!(await compare(password, passwordHashAndID.passwordHash))) {
+        if (!(await compare(password, userData.passwordHash))) {
           return null;
         }
 
         return {
-          id: passwordHashAndID.id.toString(),
+          id: userData.id.toString(),
+          image: userData.image,
+          name: userData.name,
+          email: userData.email,
         };
       },
     }),
